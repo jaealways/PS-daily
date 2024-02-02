@@ -10,15 +10,17 @@ low len, high len: len+low_len~high까지
 
 class Solution:
     def sequentialDigits(self, low: int, high: int) -> List[int]:
-        nl,nh=len(str(low)),len(str(high))
+        sl,sh=str(low),str(high)
+        nl,nh=len(sl),len(sh)
         array=[]
-        for n in range(nl,nh+1):
-            for m in range(1,11-n):
-                tmp=[str(x) for x in range(m,m+n)]
-                tmp=int(''.join(tmp))
+        mapper="123456789"
+        for i in range(nl,nh+1):
+            for j in range(10-i):
+                tmp=int(mapper[j:i+j])
                 if tmp>high:
                     break
                 elif low<=tmp:
                     array.append(tmp)
+        
         return array
                 
