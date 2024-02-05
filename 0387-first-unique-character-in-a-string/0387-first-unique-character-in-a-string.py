@@ -12,17 +12,14 @@ min()
 
 class Solution:
     def firstUniqChar(self, s: str) -> int:
-        array=[-1 for _ in range(26)]
-        for i in range(len(s)):
-            n=ord(s[i])-97
-            if array[n]>-1:
-                array[n]=len(s)
-            else:
-                array[n]=i
-        for i in range(26):
-            if array[i]==-1:
-                array[i]=len(s)
-        answer=min(array)
+        char,minidx,answer={},{},len(s)
+        for idx in range(len(s)):
+            char[s[idx]]=char.get(s[idx],0)+1
+            if s[idx] not in minidx:
+                minidx[s[idx]]=idx
+        for key,val in minidx.items():
+            if char[key]==1:
+                answer=min(answer,val)
         if answer==len(s):
             return -1
         return answer
