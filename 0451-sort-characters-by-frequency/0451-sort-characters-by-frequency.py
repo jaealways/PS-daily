@@ -8,19 +8,10 @@
 
 class Solution:
     def frequencySort(self, s: str) -> str:
-        dict_count,dict_num={},{}
-        for char in s:
-            dict_count[char]=dict_count.get(char,0)+1
-        for key,val in dict_count.items():
-            if val not in dict_num:
-                dict_num[val]=[]
-            dict_num[val].append(key)
-        list_count=sorted(list(dict_num.keys()), reverse=True)
-        answer=[]
-        for n in list_count:
-            tmp=dict_num[n]
-            tmp=[c*n for c in tmp]
-            answer=answer+tmp
-        return ''.join(answer)
+        from collections import Counter
+        
+        count=Counter(s)
+        list_char=sorted(count.keys(), key=lambda x:(-count[x]))
+        return ''.join(char*count[char] for char in list_char)
         
         
