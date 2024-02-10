@@ -12,13 +12,10 @@ class Solution:
     def countSubstrings(self, s: str) -> int:
         n,answer=len(s),0
         def pal(l,r,answer):
-            while 0<=l and r<n:
-                if s[l]==s[r]:
-                    answer+=1
-                    l-=1
-                    r+=1
-                else:
-                    break
+            while 0<=l and r<n and s[l]==s[r]:
+                answer+=1
+                l-=1
+                r+=1
             return answer
         
         for i in range(n):
