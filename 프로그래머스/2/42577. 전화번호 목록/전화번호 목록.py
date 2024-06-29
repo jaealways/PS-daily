@@ -1,16 +1,29 @@
+"""
+다른 번호의 접두어가 있으면, true return
+
+길이 순으로 sort
+
+최대 nlogn
+
+만약 문자열 순서대로 하면, 119, 1191 중에 어떤게 앞으로?
+정렬해서, 투 포인터, 
+"""
+
 def solution(phone_book):
-    array = [[] for _ in range(20)]
-    dict_p = set([])
-    n = len(phone_book)
-    for i in range(n):
-        array[len(phone_book[i]) - 1].append(phone_book[i])
-    array1 = []
-    for i in range(20):
-        array1.extend(array[i])
-    for i in range(len(array1)):
-        for l in range(1, len(array1[i]) + 1):
-            prefix = array1[i][:l]
-            if prefix in dict_p:
-                return False
-        dict_p.add(array1[i])
-    return True
+    phone_book.sort()
+    n=len(phone_book)
+    i,answer=0,True
+    while i<n:
+        if not answer:
+            break
+        for j in range(i+1,n):
+            w1,w2= phone_book[i], phone_book[j]
+            if w1==w2[:len(w1)]:
+                answer=False
+                break
+            else:
+                i=j
+                break
+        else:
+            i+=1
+    return answer
