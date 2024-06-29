@@ -1,20 +1,19 @@
 """
-( : +=1
-) : -=1
+(는 +,)는 - 부여
+총 합이 한 번이라도 음수면 false, break
 
-중간에 count가 -1 되면 answer=False
-또는 다 돌았는데 0 아니면 False
 """
 
 def solution(s):
-    n,count=len(s),0
-    for i in range(n):
-        if s[i]=="(":
-            count+=1
+    t=0
+    for i in s:
+        if i=="(":
+            t+=1
         else:
-            count-=1
-        if count<0:
+            t-=1
+        if t<0:
             return False
-    if count>0:
-        return False
+    else:
+        if t!=0:
+            return False   
     return True
