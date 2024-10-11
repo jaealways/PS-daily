@@ -1,29 +1,31 @@
 """
-장르별 많이 재생된노래 두 개 -> 베스트앨범
-1. 각 장르별 play 합 구하기
-2. 각 장르에서 가장 많이 재생된 순으로(재생수 같으면 번호 낮은 순)
-3. 각 장르 * 2로 나열하기
-* 장르에 속한 곡이 하나면 하나만...
+1. 장르 먼저 수록
+2. 장르 안에서 노래
+3. 노래 재생 같으면 번호 낮은
 
-(num,play,genre) 순으로 만들기, play 순으로 정렬
-dict_genre에서 두 개 이상이면 pass, 아니면 num 추가
+num, genre, play -> loop 돌면서 dict에 장르별 play 추가
+genre dict: [play,num]
+
+다 돌고 genre loop 돌기
+genre dict에서 value 불러서 list 정렬 후 상위 두 개 값 가져와서 answer에 더하기
 
 """
 
 def solution(genres, plays):
-    dict_genre_total={}
-    answer,list_total=[],[]
-    for i in range(len(genres)):
-        g,p=genres[i],plays[i]
-        dict_genre_total[g]=dict_genre_total.get(g,0)+p
-    for i in range(len(genres)):
-        g,p=genres[i],plays[i]
-        list_total.append((i,p,g,dict_genre_total[g]))
-    list_total.sort(key=lambda x: (-x[3],-x[1],x[0]))
-    count_genre={}
-    for i,p,g,t in list_total:
-        count_genre[g]=count_genre.get(g,0)+1
-        if count_genre[g]>2:
-            continue
-        answer.append(i)
+    answer, count_genre = [],{}
+    dict_genre={}
+    
+    for n,v in enumerate(zip(genres,plays)):
+        count_genre[v[0]]=count_genre.get(v[0],0)+v[1]
+        if not v[0] in dict_genre:
+            dict_genre[v[0]]=[]
+        dict_genre[v[0]].append((v[1],n))
+    tmp=list(count_genre.items())
+    tmp.sort(key=lambda x: -x[1])
+    print(dict_genre)
+    for cat,val in tmp:
+        tmp2=dict_genre[cat]
+        tmp2.sort(key=lambda x: (-x[0],x[1]))
+        for p,n in tmp2[:2]:
+            answer.append(n)
     return answer
